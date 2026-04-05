@@ -1,20 +1,21 @@
 import { Client,Account, ID } from "appwrite";
+import conf from '../conf/conf'
 
 export  class Authservice{
-    Client = new Client();
+    client = new Client();
     account;
 
     // constructor = setup code that should run at the moment the object is created.
     constructor(){
-        this.Client
+        this.client
             .setEndpoint(conf.appwriteUrl)
-            .setProject(conf.appwriteProjectId)
-        .this.account = new Account(this.Client);
+            .setProject(conf.appwriteProjectId);
+        this.account = new Account(this.client);
     }
 
     async createAccount({email,password,name}){
         try {
-            const userAccount = await this.account.create(ID.unique(),email,password,name);
+            const userAccount = await this.account.create({userId:ID.unique(),email,password,name});
             if (userAccount) {
                 //call another method
                 
@@ -25,14 +26,14 @@ export  class Authservice{
             }
         } catch (error) {
             throw error;
-            
+        
         }
 
     }
 
     async login({email,password}){
         try {
-            return await this.account.createEmailSession(email,password);
+            return await this.account.createEmailPasswordSession({email,password});
         } catch (error) {
             
         throw error;
