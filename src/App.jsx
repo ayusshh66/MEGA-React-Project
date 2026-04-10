@@ -7,6 +7,8 @@ import { useDispatch } from 'react-redux'
 import authservice from './appwrite/auth'
 import {login, logout} from './store/authslice'
 import { useFetcher } from 'react-router-dom'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 
 function App() {
@@ -28,11 +30,19 @@ function App() {
   },[])  
   
 
-  return (
-    <>
-      <h1>hi my name is ayush </h1>
-    </>
-  )
+  return !loading? (
+
+    <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
+      <div className='w-full flex flex-col justify-center items-center'>
+        <Header />
+        <main>
+        {/* TODO:  <Outlet /> */}
+        </main>
+        <Footer />
+      </div>
+    </div>
+      
+  ) : null
 }
 
 export default App
